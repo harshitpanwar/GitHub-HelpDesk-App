@@ -1,9 +1,11 @@
 package com.example.githubhelpdesk
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.daggerroomdbdemo.RecyclerViewAdapter
@@ -24,9 +26,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-
         initRecyclerView()
         initViewModel()
+        search.setOnClickListener{
+            progressBar.visibility = View.VISIBLE
+            if (currentFocus != null) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+            }
+
+            var text = editText.text
+            viewModel.loadListOfData(text)
+            recyclerViewAdapter.notifyDataSetChanged()
+            progressBar.visibility = View.GONE
+
+        }
 
 
     }
@@ -50,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "error in getting data", Toast.LENGTH_LONG).show()
             }
         })
-        viewModel.loadListOfData()
 
 
     }

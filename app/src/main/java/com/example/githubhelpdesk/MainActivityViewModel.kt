@@ -1,5 +1,6 @@
 package com.example.githubhelpdesk
 
+import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubhelpdesk.network.RecyclerData
@@ -17,8 +18,8 @@ class MainActivityViewModel @Inject constructor(private val repository: RetroRep
         return liveData
     }
 
-    fun loadListOfData(){
-        repository.makeApiCall("ny",liveData)
+    fun loadListOfData(query: Editable){
+        repository.makeApiCall(query.toString(), liveData)
     }
 
 
