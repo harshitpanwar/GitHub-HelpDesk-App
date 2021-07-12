@@ -17,6 +17,8 @@ object AppModule {
     val baseURL = "https://api.github.com/search/"
 
 
+    @Singleton
+    @Provides
     fun getRetroServiceInstance(retrofit: Retrofit): RetroServiceInstance{
         return retrofit.create(RetroServiceInstance::class.java)
     }
